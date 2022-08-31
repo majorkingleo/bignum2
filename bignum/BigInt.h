@@ -33,7 +33,6 @@ public:
 	BigInt & operator-=( const BigInt & other );
 
 	BigInt & operator*=( const BigInt & other );
-
 };
 
 inline BigInt operator+( const BigInt & a, const BigInt & b )
@@ -56,6 +55,8 @@ inline BigInt operator*( const BigInt & a, const BigInt & b )
 	res *= b;
 	return res;
 }
+
+BigInt operator-( const BigInt & other );
 
 inline std::ostream & operator<<( std::ostream & out, const BigInt & number )
 {

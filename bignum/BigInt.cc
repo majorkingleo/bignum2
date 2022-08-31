@@ -12,7 +12,6 @@ namespace BigNum2 {
 BigInt::BigInt()
 : data( new vchar() )
 {
-
 }
 
 BigInt::~BigInt()
@@ -23,13 +22,11 @@ BigInt::~BigInt()
 BigInt::BigInt( const BigInt & other )
 : data( new vchar( *other.data ) )
 {
-
 }
 
 BigInt::BigInt( const char *number )
 : data( new vchar( number ) )
 {
-
 }
 
 BigInt & BigInt::operator=( const BigInt & other )
@@ -73,5 +70,11 @@ BigInt & BigInt::operator*=( const BigInt & other )
 	return *this;
 }
 
+BigInt operator-( const BigInt & other )
+{
+	BigInt buf( other );
+	buf *= BigInt("-1");
+	return buf;
+}
 
 } // namespace BigNum2

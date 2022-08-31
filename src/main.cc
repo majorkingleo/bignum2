@@ -9,6 +9,7 @@
 #include <arg.h>
 #include <OutDebug.h>
 #include <colored_output.h>
+#include "y.tab.h"
 
 #ifdef ENABLE_NLS
 #   include <libintl.h>
@@ -101,12 +102,7 @@ int main(int argc,char *argv[])
         Tools::x_debug = new OutDebug();
     }
 
-    BigInt a, b;
-
-    a = "1";
-    b = "2";
-
-    std::cout << a + b << std::endl;
+    yyparse();
 
     return 0;
 }

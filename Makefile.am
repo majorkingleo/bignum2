@@ -10,7 +10,9 @@ bignum2_SOURCES=\
 		src/DetectLocale.h \
 		src/read_file.h \
 		src/read_file.cc \
-		src/main.cc
+		src/main.cc \
+		src/lex.yy.cc \
+		src/y.tab.cc
 			  
 AM_CPPFLAGS = -I$(top_srcdir)/tools \
 	-I$(top_srcdir)/cpputils/cpputilsshared  \
@@ -112,6 +114,16 @@ bignum2_LDADD = \
 	tools/libtools.a \
 	cpputils/cpputilsshared/libcpputilsshared.a \
 	cpputils/cpputilsshared/cpputilsformat/libcpputilsformat.a 
+
+src/lex.yy.cc: src/vars.l src/y.tab.cc
+	flex --header-file=src/lex.yy.h -o src/lex.yy.cc src/vars.l
+	
+src/y.tab.cc: src/vars.y
+	yacc  --output=src/y.tab.cc --defines=src/y.tab.h -dtv src/vars.y 
+ 
+BUILT_SOURCES=\
+	src/lex.yy.cc \
+	src/y.tab.cc
 
 LIBS=
 	
