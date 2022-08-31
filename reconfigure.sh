@@ -10,8 +10,11 @@ DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
 cd $DIR
 
+# just for automake
+git log > ChangeLog
+
 aclocal
-autoheader
+#autoheader
 automake --add-missing
 autoconf
 ./configure

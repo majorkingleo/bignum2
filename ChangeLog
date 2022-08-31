@@ -1,0 +1,19 @@
+commit 9bfd021f004e4b34ba20b05bf216183b13c41881
+Author: Martin Oberzalek <kingleo@gmx.at>
+Date:   Wed Aug 31 19:01:07 2022 +0200
+
+    Added infrastructure stuff
+
+commit 74aeef1e5192c308ba5156b11b0a7a8c723a4ae3
+Author: Martin Oberzalek <martin.oberzalek@ssi-schaefer.com>
+Date:   Sat Jun 5 23:05:40 2021 +0200
+
+    Initial import of sourceode from 2002
+    
+    Doesn't go through any current compiler
+
+commit d434c5057b9f0d8db13b84c164bd5282aaa974b9
+Author: Martin Oberzalek <76852670+majorkingleo@users.noreply.github.com>
+Date:   Sat Jun 5 23:01:51 2021 +0200
+
+    Create LICENSE
