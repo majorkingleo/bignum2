@@ -468,32 +468,20 @@ inline std::ostream& operator<<( std::ostream &out, const vchar &v )
   printf()
 */
 
-template<class A> void printf( const A &a )
+template <typename... Args> void printf(  const std::string & format, Args... args )
 {
-  BTT;
-  std::cout << Tools::format( "%s", a );
-  LTT;
-}
+  std::vector<Tools::Format2::BaseArg*> v_args;
 
-template<class A, class B> void printf( const A &a, const B &b )
-{
-  std::cout << Tools::format( a, b );
-}
+  Tools::Format2::add_args( v_args, args... );
 
-template<class A, class B, class C> void printf( const A &a, const B &b, const C &c )
-{
-  std::cout << Tools::format( a, b, c );
-}
+  Tools::Format2::Format2 f2( format, v_args );
 
-template<class A, class B, class C, class D> void printf( const A &a, const B &b, const C &c, const D &d )
-{
-  std::cout << Tools::format( a, b, c, d );
-}
+  for( auto x: v_args )
+    {
+      delete x;
+    }
 
-template<class A, class B, class C, class D, class E> 
-void printf( const A &a, const B &b, const C &c, const D &d, const E &e )
-{
-  std::cout << Tools::format( a, b, c, d, e );
+  std::cout << f2.get_string();
 }
 
 } // namespace BigNum2

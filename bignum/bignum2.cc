@@ -52,7 +52,7 @@
 #include "vchar.h"
 #include "bignum2.h"
 
-using namespace BigNum2;
+namespace BigNum2 {
 
 //
 // functions
@@ -73,7 +73,7 @@ pchar mult( pchar ay, pchar by, pchar cy);
   int debug = 0;
   int multdebug = 0;
 
-
+#if 0
 //==========================================================================
 int main( int argc, char **argv)
  {
@@ -108,7 +108,7 @@ int main( int argc, char **argv)
    }
    printf("i=%d %s length: %d\n", ii, z3, strlen(z3));
  }
-
+#endif
 
 //===============================================================
 //
@@ -631,5 +631,5 @@ pchar mult( pchar ay, pchar by, pchar cy)
    return( cy );
 }
 
-
+} // namespace BigNum2
 

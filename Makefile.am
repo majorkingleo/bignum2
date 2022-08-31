@@ -4,26 +4,26 @@ bignum2_SOURCES=\
 		tools_config.h\
 		src/colored_output.cc\
 		src/colored_output.h\
-		src/bignum2.cc\
 		src/OutDebug.cc\
 		src/OutDebug.h\
 		src/DetectLocale.cc \
 		src/DetectLocale.h \
 		src/read_file.h \
 		src/read_file.cc \
-		src/vchar.h \
-		src/vchar.cc
+		src/main.cc
 			  
 AM_CPPFLAGS = -I$(top_srcdir)/tools \
 	-I$(top_srcdir)/cpputils/cpputilsshared  \
 	-I$(top_srcdir)/cpputils/cpputilsshared/cpputilsformat \
 	-I$(top_srcdir)/src  \
+	-I$(top_srcdir)/bignum \
 	-DNOWAMAS \
 	-std=c++11 \
 	-fopenmp \
 	-DLOCALEDIR=\"$(localedir)\"
 
 noinst_LIBRARIES=tools/libtools.a \
+	bignum/libbignum.a \
 	cpputils/cpputilsshared/libcpputilsshared.a \
 	cpputils/cpputilsshared/cpputilsformat/libcpputilsformat.a 
 
@@ -99,7 +99,16 @@ cpputils_cpputilsshared_cpputilsformat_libcpputilsformat_a_SOURCES= \
 	cpputils/cpputilsshared/cpputilsformat/cwformat.h \
 	cpputils/cpputilsshared/cpputilsformat/cwformat.cc
 
+bignum_libbignum_a_SOURCES= \
+	bignum/bignum2.cc \
+	bignum/bignum2.h \
+	bignum/BigInt.h \
+	bignum/BigInt.cc \
+	bignum/vchar.h \
+	bignum/vchar.cc	
+
 bignum2_LDADD = \
+	bignum/libbignum.a \
 	tools/libtools.a \
 	cpputils/cpputilsshared/libcpputilsshared.a \
 	cpputils/cpputilsshared/cpputilsformat/libcpputilsformat.a 
