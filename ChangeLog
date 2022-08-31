@@ -1,3 +1,9 @@
+commit cc94f5cf94df25697df5a914542ad6942af718aa
+Author: Martin Oberzalek <kingleo@gmx.at>
+Date:   Wed Aug 31 19:09:26 2022 +0200
+
+    autconf and automake works now
+
 commit 9bfd021f004e4b34ba20b05bf216183b13c41881
 Author: Martin Oberzalek <kingleo@gmx.at>
 Date:   Wed Aug 31 19:01:07 2022 +0200

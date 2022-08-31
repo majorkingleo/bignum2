@@ -91,6 +91,7 @@
 
 #include <vector>
 #include "format.h"
+#include <assert.h>
 
 // #define DEBUG
 #ifdef DEBUG
@@ -123,7 +124,7 @@ class BChar
   vchar *v;
   const int pos;
 
-  BChar() {}
+  BChar() = delete;
 
  public:
   
@@ -468,29 +469,29 @@ inline std::ostream& operator<<( std::ostream &out, const vchar &v )
 template<class A> void printf( const A &a )
 {
   BTT;
-  std::cout << format( "%s", a );
+  std::cout << Tools::format( "%s", a );
   LTT;
 }
 
 template<class A, class B> void printf( const A &a, const B &b )
 {
-  std::cout << format( a, b );
+  std::cout << Tools::format( a, b );
 }
 
 template<class A, class B, class C> void printf( const A &a, const B &b, const C &c )
 {
-  std::cout << format( a, b, c );
+  std::cout << Tools::format( a, b, c );
 }
 
 template<class A, class B, class C, class D> void printf( const A &a, const B &b, const C &c, const D &d )
 {
-  std::cout << format( a, b, c, d );
+  std::cout << Tools::format( a, b, c, d );
 }
 
 template<class A, class B, class C, class D, class E> 
 void printf( const A &a, const B &b, const C &c, const D &d, const E &e )
 {
-  std::cout << format( a, b, c, d, e );
+  std::cout << Tools::format( a, b, c, d, e );
 }
 
 #endif
