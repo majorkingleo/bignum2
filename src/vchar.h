@@ -105,6 +105,8 @@
 
 using namespace std;
 
+namespace BigNum2 {
+
 class vchar;
 
 /*
@@ -493,5 +495,7 @@ void printf( const A &a, const B &b, const C &c, const D &d, const E &e )
 {
   std::cout << Tools::format( a, b, c, d, e );
 }
+
+} // namespace BigNum2
 
 #endif

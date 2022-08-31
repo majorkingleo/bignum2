@@ -2,6 +2,9 @@
 
 #include <unistd.h>
 #include <cstdio>
+#include <cstring>
+
+namespace BigNum2 {
 
 /*
   vchar stuff
@@ -11,7 +14,7 @@ vchar::vchar( const char* s )
 {
   BTT;  
 
-  len = ::strlen( s );  
+  len = std::strlen( s );
   len_changed = false;
 
   if( len >= size() )
@@ -324,3 +327,5 @@ char strchar( const pchar &s, int pos)
   
   return out;
 }
+
+} // namespace BigNum2

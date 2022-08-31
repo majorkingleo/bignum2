@@ -50,6 +50,9 @@
 
 
 #include "vchar.h"
+#include "bignum2.h"
+
+using namespace BigNum2;
 
 //
 // functions
