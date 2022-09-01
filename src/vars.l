@@ -13,7 +13,7 @@
                                 allocated_numbers.push_back(val); 
                                 return tINT;
                               }
-[-+*/%=^\n,]                  return *yytext;
+[-+*/%=^\n,!]                 return *yytext;
 .                             ; /* ignore all the rest */
 %%
 

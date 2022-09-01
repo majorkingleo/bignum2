@@ -22,6 +22,7 @@ public:
 	BigInt();
 	BigInt( const BigInt & other );
 	BigInt( const char *number );
+	BigInt( int number );
 	~BigInt();
 
 	BigInt & operator=( const BigInt & other );
@@ -30,9 +31,40 @@ public:
 	const char* operator*() const;
 
 	BigInt & operator+=( const BigInt & other );
+	BigInt & operator+=( int amount );
+
 	BigInt & operator-=( const BigInt & other );
+	BigInt & operator-=( int amount );
 
 	BigInt & operator*=( const BigInt & other );
+
+	BigInt & operator++() {
+		*this += 1;
+		return *this;
+	}
+
+	BigInt operator++(int) {
+		BigInt ret(*this);
+		*this += 1;
+		return ret;
+	}
+
+	BigInt & operator--() {
+		*this -= 1;
+		return *this;
+	}
+
+	BigInt operator--(int) {
+		BigInt ret(*this);
+		*this -= 1;
+		return ret;
+	}
+
+	bool operator<=( const BigInt & other );
+
+	vchar* getData() const {
+		return data;
+	}
 };
 
 inline BigInt operator+( const BigInt & a, const BigInt & b )
@@ -62,6 +94,10 @@ inline std::ostream & operator<<( std::ostream & out, const BigInt & number )
 {
 	return out << *number;
 }
+
+bool operator==( const BigInt & a, const BigInt & other );
+
+BigInt faculty( const BigInt & other );
 
 } // namespace BigNum2
 

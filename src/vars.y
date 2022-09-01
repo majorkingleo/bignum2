@@ -52,17 +52,18 @@ stmt: expr ','
     | expr '\n'          { std::cout << *$1 << std::endl; allocated_numbers.clear(); }
     ;
 
-expr: tINT               { *$$ = *$1; }
-    | tVAR               { *$$ = vars[*$1];  delete $1; }
-    | tVAR '=' expr      { *$$ = vars[*$1];  vars[*$1] = *$3; delete $1; }
-    | expr '+' expr     { *$$ = *$1 + *$3; }
-    | expr '-' expr     { *$$ = *$1 - *$3; }
-    | expr '*' expr     { *$$ = *$1 * *$3; }
-    /* | expr '/' expr     { $$ = $1 / $3; } */
-    /* | expr '%' expr     { $$ = $1 % $3; } */
-    | '+' expr  %prec tBATATA    { *$$ =  *$2; }
-    | '-' expr  %prec tBATATA    { *$$ = -(*$2); }
-    | '(' expr ')'              { $$ =  $2; }
+expr: tINT                          { *$$ = *$1; }
+    | tVAR                          { *$$ = vars[*$1];  delete $1; }
+    | tVAR '=' expr                 { *$$ = vars[*$1];  vars[*$1] = *$3; delete $1; }
+    | expr '+' expr                 { *$$ = *$1 + *$3; }
+    | expr '-' expr                 { *$$ = *$1 - *$3; }
+    | expr '*' expr                 { *$$ = *$1 * *$3; }
+    | expr '!'                      { *$$ = faculty(*$1); }
+    /* | expr '/' expr              { $$ = $1 / $3; } */
+    /* | expr '%' expr              { $$ = $1 % $3; } */
+    | '+' expr  %prec tBATATA       { *$$ =  *$2; }
+    | '-' expr  %prec tBATATA       { *$$ = -(*$2); }
+    | '(' expr ')'                  { $$ =  $2; }
     ;
 
 %%
