@@ -96,6 +96,17 @@ BigInt & BigInt::operator*=( const BigInt & other )
 	return *this;
 }
 
+BigInt & BigInt::operator/=( const BigInt & other )
+{
+	vchar result;
+	vchar mod;
+	vchar a( *(this->data) );
+	vchar b( *(other.data) );
+	div( a, b, result, mod );
+	strcpy( *data, result );
+	return *this;
+}
+
 bool BigInt::operator<=( const BigInt & other )
 {
 	if( *this == other ) {

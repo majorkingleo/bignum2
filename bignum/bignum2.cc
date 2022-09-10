@@ -72,6 +72,7 @@ void test2();
 //
 int debug = 0;
 int multdebug = 0;
+int divdebug = 1;
 
 #if 0
 //==========================================================================
@@ -630,6 +631,185 @@ pchar mult( pchar ay, pchar by, pchar cy)
 	strcat( cy, mult_result);
 	return( cy );
 }
+
+
+//===============================================================
+//
+//                       function div
+//  slow version of div
+//
+//===============================================================
+// parameter : ay / by ... result cy , mod dy
+//             returns pointer to cy
+//             ay = cy * by + dy
+// attention : ay and by is modified, must be stored
+//===============================================================
+//  attention : ouput of sign not finished, add from divf
+//===============================================================
+pchar div( pchar ay, pchar by, pchar cy, pchar dy)
+{
+	char signx[3], signy[3];
+	pchar pa, pb ;
+	char div_signa, div_signb, div_sigdiv;
+	int la, lb;
+	int div_i, div_cnt;
+	vchar divbuf1;
+	vchar divbuf2;
+	pchar z1, z2;
+	char cdiv_cnt[3];
+	int ll, j, div_0;
+	//
+	// check for valid input here
+	//
+	if( strlen(ay) < 1){
+		printf( "div:  Input Error div \n");
+		printf( "div:  Zero length string a\n");
+		printf( "div:  === div terminated abnormally ===\n");
+		strcpy( cy,"div error");
+		return( cy);
+	}
+	if( strlen(by) < 1) {
+		printf( "div:  Input Error div \n");
+		printf( "div:  Zero length string b\n");
+		printf( "div:  === div terminated abnormally ===\n");
+		strcpy( cy,"div error");
+		return( cy);
+	}
+	//
+	// check and remove sign
+	//
+	if(divdebug) {
+		printf("div: ay  %s\n", ay);
+		printf("div: by  %s\n", by);
+	}
+	//
+	// find signs
+	//
+	strncpy( signx, ay, 1);
+	strncpy( signy, by, 1);
+	signx[1] = '\0';
+	signy[1] = '\0';
+	if( divdebug ) printf("div signs:  %s %s \n", signx , signy);
+	//
+	// get final sign
+	//
+	if((strncmp(signx , "-", 1)) == 0) { div_signa = '-';}
+	else { div_signa = '+';}
+	if((strncmp(signy , "-", 1)) == 0) { div_signb = '-';}
+	else { div_signb = '+';}
+	if( divdebug) printf("div: signa,signb %c %c\n",  div_signa,  div_signb);
+	//
+	// final sign
+	//
+	div_sigdiv = '+';
+	if(( div_signa == '+') && ( div_signb == '-'))  div_sigdiv = '-';
+	if(( div_signa == '-') && ( div_signb == '+'))  div_sigdiv = '-';
+	pa = ay;
+	pb = by;
+	//
+	// remove sign
+	//
+	if(strncmp(pa,"0",1) != 0) pa = strpbrk(pa,"123456789");
+	if(strncmp(pb,"0",1) != 0) pb = strpbrk(pb,"123456789");
+	la = strlen( pa);
+	lb = strlen( pb);
+	strcpy( ay, pa);
+	strcpy( by, pb);
+	if(divdebug) printf("div: la,lb : %d %d\n", la, lb);
+	//
+	// dividend < divisor
+	//
+	if( la < lb ) {
+		strcpy( cy, "0" );
+		strcpy( dy, ay );
+		return( cy );
+	}
+	//
+	// divisor = 0
+	//
+	if( strncmp( by, "0", 1) == 0) {
+		printf( "div: Zero division error\n");
+		printf( "div: === div terminated abnormally ===\n");
+		strcpy( cy,"div error");
+		return( cy);
+	}
+	//
+	//  number of 0 and number of digits to add
+	//
+	div_0 = 0;
+	for( j = 1; j <= la - lb ; j++) {
+		div_0++;
+		strcat( by, "0");
+	}
+	if(divdebug) printf("by: %s\n", by);
+	//
+	// subtract divisor from dividend down to 0
+	// count number of subtractions
+	//
+	strcpy( divbuf2, "");
+	z1 = divbuf1;
+	if(divdebug) printf( "div: ---------- begin mainloop ----------\n");
+	//
+	// main loop
+	//------------------------------------------------------
+	for ( div_i = 1 ; div_i <= div_0 + 1; div_i ++) {
+		if(divdebug) printf( "div: ---------- div_i: %d ----------\n", div_i);
+		div_cnt = 0;
+		for(;;) {
+			div_cnt++;
+			if(divdebug) printf( "div: before add : ay, by: %s %s\n",ay,by);
+			z1 = addsub(ay,by,divbuf1,'-');
+			if(divdebug) printf( "div: after add  : ay, by, sum: %s %s %s\n",ay,by,z1);
+			strcpy( ay, z1);
+			if( ay[0] == '-' ) {
+				if(divdebug) printf( "div: add correct ay,by:%s %s\n",ay,by);
+				z1 = addsub(ay,by, divbuf1,'+');
+				strcpy( ay, z1);
+				div_cnt--;
+				break;
+			}
+		}
+		if(divdebug) printf( "div: sum, count: %s %d\n", ay, div_cnt);
+		// remove last 0 of string
+		ll = strlen(by);
+		by[ll-1] = '\0';
+		// append result
+		cdiv_cnt[0] = (char) (div_cnt + 48);
+		cdiv_cnt[1] = '\0';
+		strcat( divbuf2, cdiv_cnt);
+		if(divdebug) printf("div: append : %s \n", divbuf2);
+	}
+	//------------------------------------------------------
+	if(divdebug) printf( "div: ---------- end mainloop ----------\n");
+	//
+	//
+	strcpy( dy,ay);
+	//
+	// remove leading 0 or create 0
+	//
+	strcpy( cy,divbuf2);
+	z2 = strpbrk(cy,"123456789");
+	if( z2 == NULL) {
+		strcpy( cy, "0");
+	} else {
+		strcpy( cy, z2);
+	}
+	if( divdebug) printf("div: quot, mod : %s %s\n", cy, dy);
+	//
+	// add sign
+	//
+	strcpy( divbuf1, cy);
+	if(div_sigdiv == '-') {
+		strcpy( cy, "-");
+	} else {
+		strcpy( cy, "");
+	}
+	strcat( cy, divbuf1);
+	if( divdebug) printf("div: quot, mod : %s %s\n", cy, dy);
+	return( cy );
+}
+// end function div
+
 
 } // namespace BigNum2
 

@@ -38,6 +38,8 @@ public:
 
 	BigInt & operator*=( const BigInt & other );
 
+	BigInt & operator/=( const BigInt & other );
+
 	BigInt & operator++() {
 		*this += 1;
 		return *this;
@@ -85,6 +87,13 @@ inline BigInt operator*( const BigInt & a, const BigInt & b )
 {
 	BigInt res = a;
 	res *= b;
+	return res;
+}
+
+inline BigInt operator/( const BigInt & a, const BigInt & b )
+{
+	BigInt res = a;
+	res /= b;
 	return res;
 }
 
