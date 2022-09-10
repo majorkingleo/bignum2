@@ -13,7 +13,7 @@ for i in t* ; do
 			ARG=""
 		fi
 
-		cd "$i" && $BIGNUM $ARG < INPUT.txt > log 2>/dev/null && res=`diff log RESULT.txt 2>&1` && cd ..
+		cd "$i" && $BIGNUM $ARG < INPUT.txt > log 2>/dev/null && res=`diff -u log RESULT.txt 2>&1` && cd ..
 		if ! test -z "$res" ; then
 			echo "DIFFER in $i:"
 			echo "   $res"

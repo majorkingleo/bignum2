@@ -1,0 +1,11 @@
+
+define fact_rec (n) { 
+  if (n < 0) {
+    print "oops";
+    halt;
+  }
+  if (n < 2) return 1;
+  return n*fact_rec(n-1);
+}
+
+fact_rec(1000)
