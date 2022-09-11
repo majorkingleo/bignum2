@@ -798,14 +798,16 @@ pchar div( pchar ay, pchar by, pchar cy, pchar dy)
 	//
 	// add sign
 	//
-	strcpy( divbuf1, cy);
-	if(div_sigdiv == '-') {
-		strcpy( cy, "-");
-	} else {
-		strcpy( cy, "");
+	if( strcmp( cy,"0" ) != 0 ) {
+		strcpy( divbuf1, cy);
+		if(div_sigdiv == '-') {
+			strcpy( cy, "-");
+		} else {
+			strcpy( cy, "");
+		}
+		strcat( cy, divbuf1);
+		if( divdebug) printf("div: quot, mod : %s %s\n", cy, dy);
 	}
-	strcat( cy, divbuf1);
-	if( divdebug) printf("div: quot, mod : %s %s\n", cy, dy);
 	return( cy );
 }
 // end function div
