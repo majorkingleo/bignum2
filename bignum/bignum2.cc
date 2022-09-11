@@ -72,7 +72,7 @@ void test2();
 //
 int debug = 0;
 int multdebug = 0;
-int divdebug = 1;
+int divdebug = 0;
 
 #if 0
 //==========================================================================
@@ -223,9 +223,9 @@ pchar addsub( pchar aa, pchar bb, pchar cc, char flag)
 	addsub_carry = 0;
 	if( la == lb) {
 		for (i = 1 ; i <= la ; i++) {
-			addsub_xx = strchar( aa,i);
-			addsub_yy = strchar( bb,i);
-			// printf(" xx,yy: %c %c \n", addsub_xx, addsub_yy);
+			addsub_xx = strchar( aa,i-1);
+			addsub_yy = strchar( bb,i-1);
+
 			if(addsub_xx == addsub_yy) continue;
 			if(addsub_xx < addsub_yy) {
 				addsub_carry = 1;
@@ -322,6 +322,7 @@ pchar addsub( pchar aa, pchar bb, pchar cc, char flag)
 	return(cc);
 	//
 }
+
 //===============================================================
 //
 // function addsub1
@@ -387,7 +388,6 @@ pchar addsub1( pchar ax, pchar bx, pchar cx, char as)
 	cxx[1] = '\0';
 	//----------------------------------------
 	// loop all characters
-
 	for(i=1; i<=add_lmax; i++){
 		ii++; jj++;
 		if(ii <= add_la) {
@@ -402,7 +402,7 @@ pchar addsub1( pchar ax, pchar bx, pchar cx, char as)
 		} else {
 			bxx[0] = '0';
 		}
-		if(debug) printf("addsub1: i=%d c=%c %c %d %d\n", i, axx[0], bxx[0], (int)axx[0], (int)bxx[0]);
+		if(debug) printf("addsub1: i=%d c=%c %c %d %d\n", i, axx[0], bxx[0], axx[0], bxx[0]);
 		ia = (int)axx[0] - 48; // - '0'
 		ib = (int)bxx[0] - 48;
 
