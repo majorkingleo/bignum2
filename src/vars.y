@@ -24,6 +24,16 @@ inline void yyerror(const char *s) {
     allocated_numbers.clear(); 
 }
 
+BigNum2::BigInt* alloc_var( const BigNum2::BigInt & result ) {
+    auto new_value = std::make_shared<BigNum2::BigInt>(result);
+    allocated_numbers.push_back( new_value );
+    return new_value.get();
+}
+
+void clear_allocated_numbers() {
+    
+}
+
 %}
 
 
@@ -49,20 +59,20 @@ list: stmt
     ;
 
 stmt: expr ','
-    | expr '\n'          { std::cout << *$1 << std::endl; allocated_numbers.clear(); }
+    | expr '\n'          { std::cout << *$1 << std::endl; clear_allocated_numbers(); }
     ;
 
-expr: tINT                          { *$$ = *$1; }
-    | tVAR                          { *$$ = vars[*$1];  delete $1; }
-    | tVAR '=' expr                 { *$$ = vars[*$1];  vars[*$1] = *$3; delete $1; }
-    | expr '+' expr                 { *$$ = *$1 + *$3; }
-    | expr '-' expr                 { *$$ = *$1 - *$3; }
-    | expr '*' expr                 { *$$ = *$1 * *$3; }
-    | expr '!'                      { *$$ = faculty(*$1); }
-    | expr '/' expr                 { *$$ = *$1 / *$3; }
-    /* | expr '%' expr              { $$ = $1 % $3; } */
-    | '+' expr  %prec tBATATA       { *$$ =  *$2; }
-    | '-' expr  %prec tBATATA       { *$$ = -(*$2); }
+expr: tINT                          { $$ = alloc_var( *$1 ); }
+    | tVAR                          { *$$ = vars[*$1];  }
+    | tVAR '=' expr                 { *$$ = vars[*$1];  vars[*$1] = *$3; }
+    | expr '+' expr                 { $$ = alloc_var( *$1 + *$3 ); }
+    | expr '-' expr                 { $$ = alloc_var( *$1 - *$3 ); }
+    | expr '*' expr                 { $$ = alloc_var( *$1 * *$3 ); }
+    | expr '!'                      { $$ = alloc_var( faculty(*$1) ); }
+    | expr '/' expr                 { $$ = alloc_var( *$1 / *$3 ); }
+    /* | expr '%' expr              { $$ = alloc_var( *$1 % *$3 ); } */
+    | '+' expr  %prec tBATATA       { $$ = alloc_var( *$2 ); }
+    | '-' expr  %prec tBATATA       { $$ = alloc_var( -(*$2) ); }
     | '(' expr ')'                  { $$ =  $2; }
     ;
 
