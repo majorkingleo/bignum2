@@ -20,21 +20,25 @@ BigInt::BigInt()
 BigInt::~BigInt()
 {
 	delete data;
+	data = 0;
 }
 
 BigInt::BigInt( const BigInt & other )
 : data( new vchar( *other.data ) )
 {
+
 }
 
 BigInt::BigInt( const char *number )
 : data( new vchar( number ) )
 {
+
 }
 
 BigInt::BigInt( int number )
 : data( new vchar( format("%d", number ).c_str() ) )
 {
+
 }
 
 BigInt & BigInt::operator=( const BigInt & other )
