@@ -8,7 +8,7 @@
 #include "thread.h"
 #include <errno.h>
 #include <string.h>
-#include <cpp_util.h>
+#include <stderr_exception.h>
 
 #ifdef TOOLS_USE_THREADS
 
@@ -53,7 +53,7 @@ Thread::Mutex::Mutex()
 #else 
     if( pthread_mutex_init( &mutex, 0 ) != 0 )
     {
-    	throw new REPORT_EXCEPTION( std::string("cannot init mutex ") + strerror(errno));
+    	throw new STDERR_EXCEPTION( std::string("cannot init mutex ") + strerror(errno));
     }
 #endif
 }
